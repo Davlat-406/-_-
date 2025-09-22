@@ -1,0 +1,4 @@
+name = input('Введите ФИО: ')
+name_p = name.split(' ')
+print(name_p[0][0],name_p[1][0],name_p[2][0],sep='')
+print('Длина символов:',len(name))

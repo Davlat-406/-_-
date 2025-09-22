@@ -1,0 +1,2 @@
+minutes = int(input('Введите минуты:'))
+print(minutes//60,":""{:02d}".format(minutes % 60), sep = '')
