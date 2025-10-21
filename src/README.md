@@ -1,0 +1,13 @@
+# Python_lab_03
+
+1. Part_A.py
+
+![](/misc/images/labs/lab_03/exA_1.jpg)
+
+![](/misc/images/labs/lab_03/exA_2.jpg)
+
+![](/misc/images/labs/lab_03/exA_3.jpg)
+
+2. Part_B.py
+
+![](/misc/images/labs/lab_03/exB.jpg)
