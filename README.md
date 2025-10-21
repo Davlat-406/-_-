@@ -1,4 +1,34 @@
 # Лабораторные работы по проге БИВТ-25-5
+
+# Python_lab_01
+1.
+
+![](/misc/images/labs/lab_01/ex01.jpg)
+
+2. 
+
+![](/misc/images/labs/lab_01/ex02.jpg)
+
+3. 
+
+![](/misc/images/labs/lab_01/ex03.jpg)
+
+4. 
+
+![](/misc/images/labs/lab_01/ex04.jpg)
+
+5. 
+
+![](/misc/images/labs/lab_01/ex05.jpg)
+
+6. 
+
+![](/misc/images/labs/lab_01/ex06.jpg)
+
+7. 
+
+![](../../../misc/images/labs/lab_01/ex07.jpg)
+
 # Python_lab_02
 
 1. Part_A.py
