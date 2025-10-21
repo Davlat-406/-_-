@@ -1,12 +1,33 @@
+# def format_record(rec: tuple[str, str, float]) -> str:
+#     s = rec[0].split()
+#     if len(s) == 3:
+#         return f'{s[0].capitalize()} {s[1][0].upper()}.{s[2][0].upper()}., гр. {rec[1]}, GPA {rec[2]:.2f}'
+#     elif len(s) == 2:
+#         return f'{s[0].capitalize()} {s[1][0].upper()}., гр. {rec[1]}, GPA {rec[2]:.2f}'
+#     return ValueError('Неверный формат ФИО')
+
+# print (format_record(("Иванов Иван Иванович", "BIVT-25", 4.6)))
+
+
 def format_record(rec: tuple[str, str, float]) -> str:
+    # Проверки типов и структуры кортежа
+    if not isinstance(rec, tuple) or len(rec) != 3:
+        raise TypeError("rec должен быть кортежем из 3 элементов (ФИО, группа, GPA)")
+    if not isinstance(rec[0], str):
+        raise TypeError("ФИО должно быть строкой")
+    if not isinstance(rec[1], str):
+        raise TypeError("Группа должна быть строкой")
+    if not isinstance(rec[2], (int, float)):
+        raise TypeError("GPA должно быть числом (int или float)")
+
+    # Разбиваем ФИО на слова
     s = rec[0].split()
+
+    # Формируем строку в зависимости от количества слов
     if len(s) == 3:
         return f'{s[0].capitalize()} {s[1][0].upper()}.{s[2][0].upper()}., гр. {rec[1]}, GPA {rec[2]:.2f}'
     elif len(s) == 2:
         return f'{s[0].capitalize()} {s[1][0].upper()}., гр. {rec[1]}, GPA {rec[2]:.2f}'
-    return ValueError('Неверный формат ФИО')
-
-print (format_record(["Иванов Иван Иванович", "BIVT-25", 4.6]))
-print (format_record(["Петров Пётр", "IKBO-12", 5.0]))
-print (format_record(["Петров Пётр Петрович", "IKBO-12", 5.0]))
-print (format_record(["  сидорова  анна   сергеевна ", "ABB-01", 3.999]))
+    else:
+        raise ValueError('Неверный формат ФИО')
+print (format_record(("Иванов        ваып н      ", "BIVT-25", 46,"фловаыдф")))

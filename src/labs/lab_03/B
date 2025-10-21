@@ -1,0 +1,18 @@
+import sys
+sys.path.append("C:/Users/davla/OneDrive/Documents/GitHub/-_-/src")
+from lib import *
+
+def table(text: str, n: int = 5):
+    print(f'Всего слов: {len(tokenize(normalize(text)))}')
+    print(f'Уникальных слов: {len(set(tokenize(normalize(text))))}')
+    print('Топ-5:')
+    text = count_freq(tokenize(normalize(text)))
+    item = dict(list(text.items())[:n])
+    for keys, values in item.items():
+        print(f"{keys}: {values}")
+    print ('')
+    print("слово        | частота")
+    print("----------------------")
+    for keys, values in item.items():
+        print(f"{keys:<12} | {values}")
+print(table('Питон Питон Питон Тест Тест Тест'))

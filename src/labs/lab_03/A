@@ -1,0 +1,36 @@
+from collections import Counter
+from typing import Optional
+
+def normalize (text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
+    if yo2e == True:
+        text = text.replace('Ё','Е').replace('ё','е')
+    if casefold == True:
+        text = text.casefold()
+    for spaces in ['\t', '\r', '\n']:
+        text = text.replace(spaces,' ')
+    words = text.split()
+    text = ' '.join(words)
+    return text
+# print (normalize("ПрИвЕт\nМИр\t"))
+# print (normalize("ёжик, Ёлка"))
+# print (normalize("Hello\r\nWorld"))
+# print (normalize("  двойные   пробелы  "))
+
+import re
+def tokenize(text: str) -> list[str]:
+    simv = r'\b[а-яёa-zA-Z0-9_]+(?:-[а-яёa-zA-Z0-9_]+)*\b'
+    return re.findall(simv,text)
+# print (tokenize('привет мир'))
+# print (tokenize('hello, word!!!'))
+# print (tokenize('по-настоящему круто'))
+# print (tokenize('2025 год'))
+# print (tokenize('emoji 😃 не слово'))
+
+def count_freq(tokens: list[str], top_n: Optional[int] = None) -> dict[str, int]:
+    counter = Counter(tokens)
+    if top_n is not None:
+        return dict(counter.most_common(top_n))
+    return dict(counter)
+print (count_freq(["a","b","a","c","b","a"]))
+print (count_freq(["a","b","a","c","b","a"]))
+print (count_freq(["bb","aa","bb","aa","cc"]))
