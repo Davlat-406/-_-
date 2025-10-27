@@ -1,0 +1,36 @@
+from pathlib import Path
+import csv
+from typing import Iterable, Sequence
+def read_text (path : str|Path , encoding: str = 'utf-8') -> str:
+    p = Path(path)
+    try:
+        return p.read_text(encoding=encoding)
+    except FileNotFoundError:
+        return 'Файл не найден'
+    except UnicodeDecodeError:
+        return 'Ошибка кодировки'
+print(read_text(r"C:\Users\davla\OneDrive\Documents\GitHub\-_-\data\demo.txt"))
+
+def write_csv(rows: Iterable[Sequence], path: str | Path,
+              header: tuple[str, ...] | None = None) -> None:
+    object = Path(path)
+    rows = list(rows)
+    for index in range(1, len(rows)):
+        if len(rows[index-1]) != len(rows[index]):
+            return ValueError
+    if object.suffix == ".csv":
+        p = Path(path)
+        rows = list(rows)
+        with p.open("w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            if header is not None:
+                if len(header) == len(rows[0]):
+                    w.writerow(header)
+                else:
+                    return "Ошибка"
+            for r in rows:
+                w.writerow(r)
+        return "Успешная обработка"
+    else:
+        return "Неверный формат файла"
+print(write_csv([("word",'312'),("word", "3")], r"C:\Users\davla\OneDrive\Documents\GitHub\-_-\data\dem.csv",header = (["Заголовок 1", "Заголовок 2"]))) 

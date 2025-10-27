@@ -1,7 +1,8 @@
 from collections import Counter
-from typing import Optional
-import sys
+from typing import Optional, Iterable, Sequence
+from pathlib import Path
 import re
+import csv
 def min_max (nums: list[float | int]) -> tuple[float | int, float | int]:
     if len(nums) == 0: return ValueError
     return (min(nums), max(nums))
@@ -69,8 +70,7 @@ def format_record(rec: tuple[str, str, float]) -> str:
         return f'{s[0].capitalize()} {s[1][0].upper()}., гр. {rec[1]}, GPA {rec[2]:.2f}'
     else:
         raise ValueError('Неверный формат ФИО')
-# "print (format_record(("Иванов        ваып н      ", "BIVT-25", 46,"фловаыдф")))"
-
+    
 def normalize (text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     if yo2e == True:
         text = text.replace('Ё','Е').replace('ё','е')
@@ -92,32 +92,63 @@ def count_freq(tokens: list[str], top_n: Optional[int] = None) -> dict[str, int]
         return dict(counter.most_common(top_n))
     return dict(counter)
 
-# def main():
-#     # Читаем весь ввод из stdin
-#     text = sys.stdin.read().strip()
+def table(text: str, n: int = 5):
+    print(f'Всего слов: {len(tokenize(normalize(text)))}')
+    print(f'Уникальных слов: {len(set(tokenize(normalize(text))))}')
+    print('Топ-5:')
+    text = count_freq(tokenize(normalize(text)))
+    item = dict(list(text.items())[:n])
+    for keys, values in item.items():
+        print(f"{keys}: {values}")
+    print ('')
+    print("слово        | частота")
+    print("----------------------")
+    for keys, values in item.items():
+        print(f"{keys:<12} | {values}")
 
-#     if not text:
-#         print("Всего слов: 0")
-#         print("Уникальных слов: 0")
-#         print("Топ-5:")
-#         return
 
-#     # Обрабатываем текст
-#     normalized_text = normalize(text)
-#     tokens = tokenize(normalized_text)
-#     freq_dict = count_freq(tokens)
+def write_csv(rows: Iterable[Sequence], path: str | Path,
+              header: tuple[str, ...] | None = None) -> None:
+    object = Path(path)
+    rows = list(rows)
+    for index in range(1, len(rows)):
+        if len(rows[index-1]) != len(rows[index]):
+            return ValueError
+    if object.suffix == ".csv":
+        p = Path(path)
+        rows = list(rows)
+        with p.open("w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            if header is not None:
+                w.writerow(header)
+            for r in rows:
+                w.writerow(r)
+        return "Успешная обработка"
+    else:
+        return "Неверный формат файла"
 
-#     # Статистика
-#     total_words = len(tokens)
-#     unique_words = len(freq_dict)
+def write_any_text(rows: Iterable[Sequence], path: str | Path,
+              header: tuple[str, ...] | None = None) -> None:
+    p = Path(path)
+    rows = list(rows)
+    for index in range(1, len(rows)):
+        if len(rows[index-1]) != len(rows[index]):
+            return ValueError
+    with p.open("w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if header is not None:
+            if len(header) == len(rows[0]):
+                w.writerow(header)
+            else:
+                return "Ошибка"
+        for r in rows:
+            w.writerow(r)
 
-#     # Выводим результаты
-#     print(f"Всего слов: {total_words}")
-#     print(f"Уникальных слов: {unique_words}")
-#     print("Топ-5:")
-
-#     # Топ-5 самых частых слов
-#     top_words = count_freq(tokens, top_n=5)
-#     for word, count in top_words.items():
-#         print(f"{word}:{count}")
-        
+def read_text (path : str|Path , encoding: str = 'utf-8') -> str:
+    p = Path(path)
+    try:
+        return p.read_text(encoding=encoding)
+    except FileNotFoundError:
+        return 'Файл не найден'
+    except UnicodeDecodeError:
+        return 'Ошибка кодировки'
