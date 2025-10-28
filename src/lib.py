@@ -117,7 +117,7 @@ def write_csv(rows: Iterable[Sequence], path: str | Path,
     if object.suffix == ".csv":
         p = Path(path)
         rows = list(rows)
-        with p.open("w", newline="", encoding="utf-8") as f:
+        with p.open("w", newline="", encoding="utf-8-sig") as f:
             w = csv.writer(f)
             if header is not None:
                 w.writerow(header)
@@ -134,7 +134,7 @@ def write_any_text(rows: Iterable[Sequence], path: str | Path,
     for index in range(1, len(rows)):
         if len(rows[index-1]) != len(rows[index]):
             return ValueError
-    with p.open("w", newline="", encoding="utf-8") as f:
+    with p.open("w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
         if header is not None:
             if len(header) == len(rows[0]):
@@ -144,7 +144,7 @@ def write_any_text(rows: Iterable[Sequence], path: str | Path,
         for r in rows:
             w.writerow(r)
 
-def read_text (path : str|Path , encoding: str = 'utf-8') -> str:
+def read_text (path : str|Path , encoding: str = 'utf-8-sig') -> str:
     p = Path(path)
     try:
         return p.read_text(encoding=encoding)

@@ -1,25 +1,10 @@
 import sys
 sys.path.append(r"C:\Users\davla\OneDrive\Documents\GitHub\-_-\src")
 from lib import *
-import csv
-
-def write_csv(freq_dict: dict, filename: str,header: list[str] | None = None) -> None:
-    sorted_items = sorted(freq_dict.items(), key=lambda x: (-x[1], x[0]))
-    
-    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-        if filename.endswith('.csv'):
-            writer = csv.writer(csvfile)
-            if header is not None:
-                writer.writerow(header)
-            for word, count in sorted_items:
-                writer.writerow([word, count])
-        else:
-            raise ValueError('Неверный формат файла')
 
 def task_b(text: str):
     norm_t = tokenize(normalize(text))
     count_t = count_freq(norm_t)
-    write_csv(count_t, r"C:\Users\davla\OneDrive\Documents\GitHub\-_-\data\report.csv",header = (['Заголовок 1','Заголовок 2']) )
+    write_csv(count_t, r"C:\Users\davla\OneDrive\Documents\GitHub\-_-\data\report0910101010.txt",header = (['Заголовок 1','Заголовок 2']) )
     return table(text)
-
 print(task_b(read_text(r"C:\Users\davla\OneDrive\Documents\GitHub\-_-\data\input.txt")))
