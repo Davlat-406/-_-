@@ -7,12 +7,14 @@ def write_csv(freq_dict: dict, filename: str,header: list[str] | None = None) ->
     sorted_items = sorted(freq_dict.items(), key=lambda x: (-x[1], x[0]))
     
     with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
-        if header is not None:
-            writer.writerow(header)
-        for word, count in sorted_items:
-            writer.writerow([word, count])
-        
+        if filename.endswith('.csv'):
+            writer = csv.writer(csvfile)
+            if header is not None:
+                writer.writerow(header)
+            for word, count in sorted_items:
+                writer.writerow([word, count])
+        else:
+            raise ValueError('Неверный формат файла')
 
 def task_b(text: str):
     norm_t = tokenize(normalize(text))
