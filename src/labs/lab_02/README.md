@@ -1,4 +1,4 @@
-# Python_labs
+# Python_lab_02
 
 1. Part_A.py
 
@@ -11,3 +11,4 @@
 3. Part_C.py
 
 ![](../../../misc/images/labs/lab_02/Ex_C.jpg)
+
