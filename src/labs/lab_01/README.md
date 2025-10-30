@@ -1,4 +1,4 @@
-# c_labs
+# Python_lab_01
 
 
 1. 01_greeting.py
